@@ -11,15 +11,18 @@ class Todo extends StatefulWidget {
 class _TodoState extends State<Todo> {
   bool _done = false;
   String _doneMessage = 'To do';
+  Color _backgroundColor = Colors.amber;
   final TextEditingController _toDoTitleController = TextEditingController();
 
-  void toggleDone() {
+  void toggleDone(bool? done) {
     setState(() {
-      _done = !_done;
+      _done = done!;
       if (_done) {
         _doneMessage = "Done";
+        _backgroundColor = Colors.blueGrey;
       } else {
         _doneMessage = 'To do';
+        _backgroundColor = Colors.amber;
       }
     });
   }
@@ -30,14 +33,16 @@ class _TodoState extends State<Todo> {
       width: 400,
       height: 100,
       child: Card(
-          color: Colors.amber,
+          color: _backgroundColor,
           child: ListTile(
-            title: TextField(
-              controller: _toDoTitleController,
-            ),
-            trailing: ElevatedButton(
-                onPressed: toggleDone, child: Text(_doneMessage)),
-          )),
+              title: TextField(
+                controller: _toDoTitleController,
+              ),
+              trailing: Checkbox(value: _done, onChanged: toggleDone)
+
+              // ElevatedButton(
+              //     onPressed: toggleDone, child: Text(_doneMessage)),
+              )),
     );
   }
 }
