@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Todo extends StatefulWidget {
   const Todo({super.key});
@@ -10,17 +11,15 @@ class Todo extends StatefulWidget {
 class _TodoState extends State<Todo> {
   bool _done = false;
   String _doneMessage = 'To do';
-  String _actionMessage = 'Done';
+  final TextEditingController _toDoTitleController = TextEditingController();
 
   void toggleDone() {
     setState(() {
       _done = !_done;
       if (_done) {
         _doneMessage = "Done";
-        _actionMessage = 'To do';
       } else {
         _doneMessage = 'To do';
-        _actionMessage = 'Done';
       }
     });
   }
@@ -33,9 +32,11 @@ class _TodoState extends State<Todo> {
       child: Card(
           color: Colors.amber,
           child: ListTile(
-            title: Text(_doneMessage),
+            title: TextField(
+              controller: _toDoTitleController,
+            ),
             trailing: ElevatedButton(
-                onPressed: toggleDone, child: Text(_actionMessage)),
+                onPressed: toggleDone, child: Text(_doneMessage)),
           )),
     );
   }
