@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fitness/components/todo-list.dart';
+import 'package:flutter_fitness/components/todo_list.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
