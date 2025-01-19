@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class Todo extends StatefulWidget {
   const Todo({super.key});
@@ -10,7 +9,6 @@ class Todo extends StatefulWidget {
 
 class _TodoState extends State<Todo> {
   bool _done = false;
-  String _doneMessage = 'To do';
   Color _backgroundColor = Colors.amber;
   final TextEditingController _toDoTitleController = TextEditingController();
 
@@ -18,10 +16,8 @@ class _TodoState extends State<Todo> {
     setState(() {
       _done = done!;
       if (_done) {
-        _doneMessage = "Done";
         _backgroundColor = Colors.blueGrey;
       } else {
-        _doneMessage = 'To do';
         _backgroundColor = Colors.amber;
       }
     });
@@ -38,11 +34,7 @@ class _TodoState extends State<Todo> {
               title: TextField(
                 controller: _toDoTitleController,
               ),
-              trailing: Checkbox(value: _done, onChanged: toggleDone)
-
-              // ElevatedButton(
-              //     onPressed: toggleDone, child: Text(_doneMessage)),
-              )),
+              trailing: Checkbox(value: _done, onChanged: toggleDone))),
     );
   }
 }
