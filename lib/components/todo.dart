@@ -1,40 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fitness/models/todo.dart';
+import 'package:flutter_fitness/models/todo_list.dart';
+import 'package:provider/provider.dart';
 
-class Todo extends StatefulWidget {
-  const Todo({super.key});
+class Todo extends StatelessWidget {
+  final TodoModel todo;
 
-  @override
-  State<Todo> createState() => _TodoState();
-}
-
-class _TodoState extends State<Todo> {
-  bool _done = false;
-  Color _backgroundColor = Colors.amber;
-  final TextEditingController _toDoTitleController = TextEditingController();
-
-  void toggleDone(bool? done) {
-    setState(() {
-      _done = done!;
-      if (_done) {
-        _backgroundColor = Colors.blueGrey;
-      } else {
-        _backgroundColor = Colors.amber;
-      }
-    });
-  }
+  const Todo({required this.todo, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 400,
-      height: 100,
-      child: Card(
-          color: _backgroundColor,
-          child: ListTile(
+    return Consumer<TodoListModel>(
+      builder: (context, todoList, child) {
+        return SizedBox(
+          width: 400,
+          height: 100,
+          child: Card(
+            color: todo.done ? Colors.blueGrey : Colors.amber,
+            child: ListTile(
               title: TextField(
-                controller: _toDoTitleController,
+                controller: TextEditingController(text: todo.title),
+                onSubmitted: (value) {
+                  if (value.isNotEmpty) {
+                    todoList.updateTodo(todo.id, title: value);
+                  }
+                },
               ),
-              trailing: Checkbox(value: _done, onChanged: toggleDone))),
+              trailing: Checkbox(
+                value: todo.done,
+                onChanged: (value) {
+                  if (value != null) {
+                    todoList.updateTodo(todo.id, done: value);
+                  }
+                },
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

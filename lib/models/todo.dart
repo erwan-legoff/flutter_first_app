@@ -1,9 +1,7 @@
-import 'dart:ffi';
-
-class Todo {
+class TodoModel {
   final bool done;
   final String title;
-  final Int32 id;
+  final int id;
 
-  Todo({required this.done, required this.title, required this.id});
+  TodoModel({required this.done, required this.title, required this.id});
 }
